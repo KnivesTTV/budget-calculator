@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const MIN_SALARY = 10000;
       const MAX_SALARY = 20000;
       const FIXED_CONTRIBUTION = 400;
-      const MAX_CONTRIBUTION = 1350;
+      const MAX_CONTRIBUTION = 1750;
       const RATE = 0.045;
   
       if (basicSalary <= MIN_SALARY) {
