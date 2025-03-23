@@ -6,12 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("input", calculateBudget);
   precisionCheckbox.addEventListener("change", calculateBudget);
 
-  function formatCurrency(amount, isWholeNumber) {
+
+
+  
+  function formatCurrency(amount) {
     return new Intl.NumberFormat("en-PH", {
       style: "currency",
       currency: "PHP",
-      minimumFractionDigits: isWholeNumber ? 0 : 2,
-      maximumFractionDigits: isWholeNumber ? 0 : 2,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(amount);
   }
 
@@ -38,16 +41,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function calculateSSSContribution(basicSalary) {
+    if (basicSalary <= 0) return 0;
     return Math.min(Math.max(basicSalary * 0.045, 400), 1750);
   }
-
+  
   function calculatePhilHealthContribution(basicSalary) {
+    if (basicSalary <= 0) return 0;
     return Math.min(Math.max(basicSalary * 0.025, 200), 1600);
   }
-
-  function calculatePagIbigContribution() {
-    return 200;
+  
+  function calculatePagIbigContribution(basicSalary) {
+    return basicSalary > 0 ? 200 : 0;
   }
+  
 
   function calculateBudget() {
     const basicSalary = parseFloat(document.getElementById("income").value) || 0;
@@ -57,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const monthlySalary = basicSalary + nonTaxableAllowance;
     const sssContribution = calculateSSSContribution(basicSalary);
     const philHealthContribution = calculatePhilHealthContribution(basicSalary);
-    const pagIbigContribution = calculatePagIbigContribution();
+    const pagIbigContribution = calculatePagIbigContribution(basicSalary);
 
     const totalContributions = sssContribution + philHealthContribution + pagIbigContribution;
     const taxableIncome = monthlySalary - totalContributions;
@@ -73,8 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let fixedTotal = 0;
     let fixedCategoryAmounts = fixedAllocations.map((cat) => {
-      let amount = monthlySalary * cat.percentage;
-      amount = usePreciseValues ? amount : Math.round(amount);
+      let amount = usePreciseValues ? monthlySalary * cat.percentage : Math.round(monthlySalary * cat.percentage);
       fixedTotal += amount;
       return { name: cat.name, amount: amount };
     });
@@ -89,34 +94,42 @@ document.addEventListener("DOMContentLoaded", function () {
       { name: "Miscellaneous", percentage: 0.03 },
     ];
 
-    const totalVariablePercentage = variableAllocations.reduce((total, cat) => total + cat.percentage, 0);
+    let totalVariablePercentage = variableAllocations.reduce((total, cat) => total + cat.percentage, 0);
     let variableCategoryAmounts = variableAllocations.map((cat) => {
-      let amount = remainingNetPay * (cat.percentage / totalVariablePercentage);
-      amount = usePreciseValues ? amount : Math.round(amount);
-      return { name: cat.name, amount: amount };
+      return { name: cat.name, amount: usePreciseValues ? remainingNetPay * (cat.percentage / totalVariablePercentage) : Math.round(remainingNetPay * (cat.percentage / totalVariablePercentage)) };
     });
 
-    let resultHTML = '<div class="result">';
+    let totalVariableAllocated = variableCategoryAmounts.reduce((sum, cat) => sum + cat.amount, 0);
+    let roundingDifference = remainingNetPay - totalVariableAllocated;
+    
+    if (variableCategoryAmounts.length > 0) {
+      variableCategoryAmounts[variableCategoryAmounts.length - 1].amount += roundingDifference;
+    }
 
+    let resultHTML = '<div class="result">';
     resultHTML += `<h3>Income & Deductions:</h3>`;
     resultHTML += `
-    
-      <div class="category"><span>Gross Income:</span> <span>${formatCurrency(monthlySalary, false)}</span></div>
-      <div class="category"><span>Withholding Tax:</span> <span>${formatCurrency(withholdingTax, false)}</span></div>
-      <div class="category"><span>SSS Contribution:</span> <span>${formatCurrency(sssContribution, false)}</span></div>
-      <div class="category"><span>PhilHealth Contribution:</span> <span>${formatCurrency(philHealthContribution, false)}</span></div>
-      <div class="category"><span>PAG-IBIG Contribution:</span> <span>${formatCurrency(pagIbigContribution, false)}</span></div>
-      <div class="category"><span>Net Pay:</span> <span>${formatCurrency(netPay, false)}</span></div>
+      <div class="category"><span>Gross Income:</span> <span>${formatCurrency(monthlySalary)}</span></div>
+      <div class="category"><span>Withholding Tax:</span> <span>${formatCurrency(withholdingTax)}</span></div>
+      <div class="category"><span>SSS Contribution:</span> <span>${formatCurrency(sssContribution)}</span></div>
+      <div class="category"><span>PhilHealth Contribution:</span> <span>${formatCurrency(philHealthContribution)}</span></div>
+      <div class="category"><span>PAG-IBIG Contribution:</span> <span>${formatCurrency(pagIbigContribution)}</span></div>
+      <div class="category"><span>Net Pay:</span> <span>${formatCurrency(netPay)}</span></div>
     `;
 
     resultHTML += '<h3>Fixed Allocations (Based on Gross Income):</h3>';
     fixedCategoryAmounts.forEach((category) => {
-      resultHTML += `<div class="category"><span>${category.name}:</span> <span>${formatCurrency(category.amount, false)}</span></div>`;
+      resultHTML += `<div class="category"><span>${category.name}:</span> <span>${formatCurrency(category.amount)}</span></div>`;
     });
+    
+    resultHTML += `<div class="category"><span>After Fixed Allocations:</span> <span>${formatCurrency(remainingNetPay)}</span></div>`;
+    
+
+
 
     resultHTML += '<h3>Remaining Budget Categories (Based on Net Pay):</h3>';
     variableCategoryAmounts.forEach((category) => {
-      resultHTML += `<div class="category"><span>${category.name}:</span> <span>${formatCurrency(category.amount, false)}</span></div>`;
+      resultHTML += `<div class="category"><span>${category.name}:</span> <span>${formatCurrency(category.amount)}</span></div>`;
     });
 
     resultHTML += '</div>';

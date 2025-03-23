@@ -11,10 +11,12 @@
     <h2>Budget Calculator</h2>
     <form id="budget-form">
       <label for="income">Basic Salary (in pesos):</label>
-      <input type="number" id="income" min="0" step="1">
+      <input type="text" id="income" placeholder="₱0.00" oninput="formatInputValue(this)">
       
       <label for="non-taxable-allowance">Non-taxable Allowance (in pesos):</label>
-      <input type="number" id="non-taxable-allowance" min="0" step="1" placeholder="Enter non-taxable allowance">
+      <input type="text" id="non-taxable-allowance" placeholder="₱0.00" oninput="formatInputValue(this)">
+      
+
     </form>
 
     <div id="result">
