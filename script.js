@@ -113,32 +113,46 @@ document.addEventListener("DOMContentLoaded", function () {
         percentage: category.percentage / totalPercentage,
       }));
   
+
+
       let totalSum = 0;
       let resultHTML = '<div class="result">';
       categories.forEach((category) => {
+        const categoryClass = `category-${category.name.replace(/\s+/g, '-')}`; // Replace spaces with dashes
         resultHTML += `
-          <div class="category">
-            <span class="category-name">${category.name}:</span>
-            <span class="category-amount">${formatCurrency(category.amount)}</span>
+          <div class="category ${categoryClass}">
+            <span class="${categoryClass}">${category.name}:</span>
+            <span class="${categoryClass}-amount">${formatCurrency(category.amount)}</span>
           </div>
         `;
       });
-  
+      
       resultHTML += '<h3>Budget Categories:</h3>';
-  
+      
       adjustedPercentages.forEach((category) => {
+        const categoryClass = `category-${category.name.replace(/\s+/g, '-')}`; // Replace spaces with dashes
         const allocatedAmount = totalIncome * category.percentage;
         const roundedAmount = Math.round(allocatedAmount);
-  
+      
         resultHTML += `
-          <div class="category">
-            <span class="category-name">${category.name}:</span>
-            <span class="category-amount">${formatCurrency(roundedAmount)}</span>
+          <div class="category ${categoryClass}">
+            <span class="${categoryClass}">${category.name}:</span>
+            <span class="${categoryClass}-amount">${formatCurrency(roundedAmount)}</span>
           </div>
         `;
-  
+      
         totalSum += roundedAmount;
       });
+      
+      resultHTML += "</div>";
+      resultDiv.innerHTML = resultHTML;
+      
+
+
+
+
+
+
   
       resultHTML += "</div>";
       resultDiv.innerHTML = resultHTML;

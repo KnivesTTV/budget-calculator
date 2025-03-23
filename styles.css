@@ -1,59 +1,66 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#calculator {
+  width: 60%; /* Make it wider */
+  max-width: 900px; /* Limit max width for larger screens */
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#result {
+  margin-top: 20px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.result div {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.result h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   #calculator {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Adjust for smaller screens */
   }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  #result {
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .category {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 5px 0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .category-name {
-    font-weight: bold;
-    flex: 1;
-  }
-  
-  .category-amount {
-    flex: 1;
-    text-align: right;
-  }
-  
-  .category.total {
-    font-size: 1.2em;
-    margin-top: 10px;
-    border-top: 1px solid #ccc;
-  }
-  
+}
