@@ -6,16 +6,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 #calculator {
-  width: 60%; /* Make it wider */
-  max-width: 900px; /* Limit max width for larger screens */
+  width: 60%;
+  max-width: 900px;
   background: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 h2 {
@@ -37,20 +39,28 @@ input {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 16px;
 }
 
 #result {
   margin-top: 20px;
-  padding: 10px;
+  padding: 15px;
   background: #fff;
   border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
 }
 
 .result div {
   display: flex;
   justify-content: space-between;
-  padding: 5px 0;
+  padding: 8px 0;
   border-bottom: 1px solid #ddd;
+  font-size: 16px;
 }
 
 .result h3 {
@@ -58,9 +68,35 @@ input {
   text-align: center;
 }
 
+/* Fieldset Styling */
+fieldset {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+
+legend {
+  font-weight: bold;
+}
+
+/* Checkbox Label Styling */
+label input[type="checkbox"] {
+  margin-right: 5px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   #calculator {
-    width: 90%; /* Adjust for smaller screens */
+    width: 90%;
+  }
+
+  .result div {
+    font-size: 14px;
+  }
+
+  input {
+    font-size: 14px;
   }
 }
