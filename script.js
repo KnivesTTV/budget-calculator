@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("budget-form");
-  const precisionCheckbox = document.getElementById("precision-sql");
+  const precisionCheckbox = document.getElementById("precise-distribution-of-calculation");
   const resultDiv = document.getElementById("result");
 
   form.addEventListener("input", calculateBudget);

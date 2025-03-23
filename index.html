@@ -16,12 +16,17 @@
       <label for="non-taxable-allowance">Non-taxable Allowance (in pesos):</label>
       <input type="number" id="non-taxable-allowance" min="0" step="1" placeholder="Enter non-taxable allowance">
     </form>
+    
     <div id="result"></div>
 
-    <label>
-      <input type="checkbox" id="precision-sql" checked>
-      Precision in SQL
-    </label>
+    <!-- Options Section -->
+    <fieldset>
+      <legend>Options</legend>
+      <label>
+        <input type="checkbox" id="precise-distribution-of-calculation">
+        Precise Distribution of Calculation
+      </label>
+    </fieldset>
     
   </div>
   <script src="script.js"></script>
