@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,30 +12,19 @@
     <h2>Budget Calculator</h2>
     <form id="budget-form">
       <label for="income">Basic Salary (in pesos):</label>
-      <input type="text" id="income" placeholder="₱0.00" oninput="formatInputValue(this)">
+      <input type="text" id="income" placeholder="₱0.00">
       
       <label for="non-taxable-allowance">Non-taxable Allowance (in pesos):</label>
-      <input type="text" id="non-taxable-allowance" placeholder="₱0.00" oninput="formatInputValue(this)">
-      
-
+      <input type="text" id="non-taxable-allowance" placeholder="₱0.00">
     </form>
 
     <div id="result">
       <h3>Salary Breakdown</h3>
       <div class="result">
-        <div><span>Basic Salary:</span> <span>₱0.00</span></div>
-        <div><span>Non-taxable Allowance:</span> <span>₱0.00</span></div>
-        <div><span>Monthly Salary:</span> <span>₱0.00</span></div>
-        <div><span>Withholding Tax:</span> <span>₱0.00</span></div>
-        <div><span>SSS Contribution:</span> <span>₱0.00</span></div>
-        <div><span>PhilHealth Contribution:</span> <span>₱0.00</span></div>
-        <div><span>PAG-IBIG Contribution:</span> <span>₱0.00</span></div>
-        <div><span>Total Deductions:</span> <span>₱0.00</span></div>
-        <div><span>Net Pay:</span> <span>₱0.00</span></div>
+        <!-- your result rows… -->
       </div>
     </div>
 
-    <!-- Options Section -->
     <fieldset>
       <legend>Options</legend>
       <label>
